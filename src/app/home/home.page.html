@@ -1,20 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Avisos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list class="post-list">
+    <ion-item class="ion-no-padding" *ngFor="let post of postList">
+      <div>
+        <ion-header>
+          <ion-text [ngClass]="{
+            'category-red' : post.type == 'criticism',
+            'category-yellow' : post.type == 'suggestion',
+            'category-green' : post.type == 'compliment'
+          }">{{getPostType(post)}}</ion-text>
+          <ion-text>{{stringifyDate(post.date)}}</ion-text>
+        </ion-header>
+        <ion-text>{{post.message}}</ion-text>
+        <div>
+          <ion-card *ngIf="post.images && post.images.length > 0">
+            <img *ngFor="let url of post.images" src="{{url}}" />
+          </ion-card>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
